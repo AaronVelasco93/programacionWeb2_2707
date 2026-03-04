@@ -1,0 +1,14 @@
+let nombreUsuario= "Aaron";
+let estado = true;
+
+if(estado){
+    console.log(`Ganaste : ${nombreUsuario}`);
+}else{
+    console.log(`Perdiste: ${nombreUsuario}`);
+}
+console.log("-------------------------------");
+
+console.log(`
+${estado ? 'Ganaste: ': 'Perdiste:' } ${nombreUsuario}
+    `);
+
