@@ -2,7 +2,8 @@ let productos =[
     {nombre: 'camisa',   precio: 300},
     {nombre: 'pantalon', precio: 550},
     {nombre: 'zapatos',  precio: 750},
-    {nombre: 'sombrero', precio: 550}
+    {nombre: 'sombrero', precio: 550},
+    {nombre: 'tenis',    precio: 1200}
 ];
 /*
 que quieres comprar
