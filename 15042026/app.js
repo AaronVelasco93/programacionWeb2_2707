@@ -1,53 +1,33 @@
-// arreglo donde se guardan los productos que el cliente va agregando al carrito de compras
-const carrito = [];
+// arreglo donde se guardan los usuarios registrados
+const usuarios = [];
 
-// definimos la clase producto donde se definen los productos que se van a vender en la tienda
-class Producto {
-    constructor(nombre, precio) {
-        this.nombre = nombre;
-        this.precio = precio;
-    }
-}
-// funcion para agregar productos al carrito de compras
-function agregarProducto(carrito, producto,cantidad) {
-    // buscamos si el producto ya esta en el carrito de compras
-    const indice = carrito.findIndex((item) => item.producto.nombre === producto.nombre);
-    if (indice !== -1) {
-        // si el producto ya esta en el carrito de compras, se actualiza la cantidad
-        carrito[indice].cantidad += cantidad;
-    } else {
-        // si el producto no esta en el carrito de compras, se agrega al carrito de compras
-        carrito.push({ producto, cantidad: cantidad });
-    }
-    // actualziar la vista del carrito de compras
-    mostrarCarrito(carrito);
-}
-// funcion para mostrar el carrito de compras
+// guardar el formulario y salida|
+const form = document.getElementById('userForm');
+const salida = document.getElementById('salidaJSON');
 
-function mostrarCarrito(carrito) {
-    const listaCarrito = document.getElementById("carrito");
-    listaCarrito.innerHTML = ""; // limpiar el carrito de compras para mostrar los productos actualizados
+// función para manejar el envío del formulario
+form.addEventListener('submit', 
+    function(event) {
+    event.preventDefault(); // evitar que el formulario se envíe de forma tradicional
+    // obtener los valores de los campos del formulario
+    const nombre = document.getElementById('nombre').value.trim();
+    const email = document.getElementById('correo').value.trim();
+
+    // crear un objeto de usuario
+    const nuevoUsuario = {
+        nombre: nombre,
+        email: email
+    };
+    // guardar en el arreglo
+    usuarios.push(nuevoUsuario);
+
     
-    carrito.forEach((item) => {
-        const li = document.createElement("li");
-        li.textContent = `${item.producto.nombre} - $${item.producto.precio} x ${item.cantidad}`;
-        listaCarrito.appendChild(li);
-    });
-}
+    // mostrar el usuario JSON registrado en la salida con formato JSON
+    salida.textContent = JSON.stringify(nuevoUsuario, null, 2);
+    
+    // limpiar el formulario
+    form.reset();
+console.log(usuarios); // para verificar que los usuarios se están guardando correctamente
 
-// eventos para agregar productos al carrito de compras
-document.getElementById("formulario").addEventListener('submit', 
-    function (event){
-        event.preventDefault(); // evitar que el formulario se envie y se recargue la pagina
-        const nombreProducto = document.getElementById("nombre").value.trim();
-        const precioProducto = parseFloat(document.getElementById("precio").value);
-        const cantidadProducto = parseInt(document.getElementById("cantidad").value);
-        // crear un nuevo objeto producto con los valores del formulario
-        const producto = new Producto(nombreProducto, precioProducto);
-        // agregar el producto al carrito de compras
-        agregarProducto(carrito, producto, cantidadProducto);
-        // limpiar el formulario despues de agregar el producto al carrito de compras
-        document.getElementById("formulario").reset();
-        
-    } );
+});
 
