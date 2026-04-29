@@ -1,0 +1,19 @@
+{
+  "name": "crud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.4.2", // Permite cargar variables de entorno desde un archivo .env
+    "ejs": "^5.0.2", // Motor de plantillas para generar HTML dinámico
+    "express": "^5.2.1", // Framework web para Node.js
+    "mysql2": "^3.22.3" // Cliente MySQL para Node.js, compatible con Promesas
+  }
+}

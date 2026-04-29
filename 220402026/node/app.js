@@ -2,7 +2,7 @@
 const express = require('express');
 const path = require('path');
 // crear una instancia de express
-const app = express();
+const app  = express();
 // puerto para el servidor
 const PORT = 3010;
 // configurar el servidor para recibir datos en texto plano
