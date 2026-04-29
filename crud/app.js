@@ -24,7 +24,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //middleware para parsear el cuerpo de las solicitudes
 app.use(express.urlencoded({ extended: false }));
- 
+
+ // Cambio: permitir solicitudes JSON enviadas por fetch desde los formularios.
+app.use(express.json());
 // usar las rutas definidas en el archivo de rutas
 app.use('/', userRoutes);
 

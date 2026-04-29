@@ -3,46 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Incio de sistema de usuarios</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Usuarios</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <!-- formulario para agregar un usuario -->
-     <form action="/add" method="post">
-        <label for="username">Nombre de usuario:</label>
-        <input type="text"  name="nombre" required><br>
-        <br>
-        <label for="">Correo</label>
-        <input type="email" name="correo" required>
-        <br>
-        <button type="submit">Agregar usuario</button>
-     </form>
+    <h1>Usuarios</h1>
+    <!-- Formulario para agregar un nuevo usuario -->
+    <form id="addUserForm" action="/add" method="post">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="nombre" required><br><br>
+
+        <label for="email">Correo Electr&oacute;nico:</label>
+        <input type="email" id="email" name="correo" required><br><br>
+
+        <button type="submit">Agregar</button>
+    </form>
     <hr>
-     <!-- tabla para mostrar los usuarios -->
-     <table>
+    <!-- Tabla para mostrar los usuarios -->
+    <table>
         <thead>
             <tr>
-                <th>Nombre de usuario</th>
-                <th>Correo</th>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo Electr&oacute;nico</th>
                 <th>Acciones</th>
             </tr>
         </thead>
+        <!-- Bucle para mostrar cada usuario en una fila de la tabla con EJS -->
         <tbody>
-            <!-- Utilizar un bloque de EJS con un forEach para ver los datos -->
-            <% users.forEach(user => { %>
-            <tr>
-                <td><%= user.nombre %></td>
-                <td><%= user.correo %></td>
-                <!-- anclas para editar y eliminar -->
-                 <td>
-                    <a href="/edit/<%= user.id %>">Editar</a>
-                    <a href="/delete/<%= user.id %>">Eliminar</a>
-                 </td>
-            </tr>
-            <% }); %>
+            <% users.forEach(usuario => { %>
+                <tr>
+                    <td><%= usuario.id %></td>
+                    <td><%= usuario.nombre %></td>
+                    <td><%= usuario.correo %></td>
+                    <td>
+                        <a href="/edit/<%= usuario.id %>">Editar</a>
+                        <a href="/delete/<%= usuario.id %>">Eliminar</a>
+                    </td>
+                </tr>
+            <% }) %>
         </tbody>
-       
-   
-        </table>
+    </table>
+
+    <script>
+    const form = document.getElementById('addUserForm');
+    const nombre = document.getElementById('name');
+    const correo = document.getElementById('email');
+
+    // Cambio: enviar el alta con fetch para alertar correo duplicado sin limpiar el formulario.
+    form.addEventListener('submit', async e => {
+        e.preventDefault();
+
+        try {
+            const res = await fetch('/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    nombre: nombre.value,
+                    correo: correo.value
+                })
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                alert(data.error);
+                correo.focus();
+                correo.select();
+                return;
+            }
+
+            alert(data.mensaje);
+            form.reset();
+            location.reload();
+        } catch (error) {
+            alert('No se pudo procesar la solicitud. Intente nuevamente.');
+        }
+    });
+    </script>
 </body>
 </html>
